@@ -10,24 +10,24 @@ routes.post('/login', function (req, res) {
 
   //check for matching user in DB
   User.findOne({email: email})
-  .then((user) => {
-    if (user) {
-      hasher.compare(password, user, (token) => {
-        if (token) {
-          res.status(200).json({ token: token });
-        } else {
-          res.status(400).json({ error: "Invalid credentials" })
-        }
+    .then((user) => {
+      if (user) {
+        hasher.compare(password, user, (token) => {
+          if (token) {
+            res.status(200).json({token: token});
+          } else {
+            res.status(400).json({error: "Invalid credentials"})
+          }
 
-      });
-    } else {
-      res.status(400).json({ error: "Invalid credentials" });
-    }
-  })
-  .catch((error) => {
-    console.log(error);
-    res.status(400).json({ error: "Something went wrong" })
-  })
+        });
+      } else {
+        res.status(400).json({error: "Invalid credentials"});
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json({error: "Something went wrong"})
+    })
 });
 
 module.exports = routes;

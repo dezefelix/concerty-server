@@ -21,29 +21,29 @@ const UserSchema = new Schema({
   }
 }, {
   timestamps: true
-});
+}, {strict: true});
 
 const User = mongoose.model('User', UserSchema);
 
 // Create initial user.
 hasher.hash('admin', (hash) => [
   User.findOne({})
-  .then((user) => {
-    if (!user) {
-      const user = new User({
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'admin@mail.com',
-        password: hash,
-      });
-      user.save()
-      .then(() => console.log({ success: 'INITIAL USER CREATED' }))
-      .catch((error) => console.log(error));
-    }
-  })
-  .catch((error) => {
-    console.log(error);
-  })
+    .then((user) => {
+      if (!user) {
+        const user = new User({
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'admin@mail.com',
+          password: hash,
+        });
+        user.save()
+          .then(() => console.log({success: 'INITIAL USER CREATED'}))
+          .catch((error) => console.log(error));
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 ]);
 
 module.exports = User;
