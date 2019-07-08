@@ -17,7 +17,7 @@ routes.post('/', function (req, res) {
       res.status(200).json(user);
     })
     .catch((error) => {
-      console.log(error.message);
+      console.log(error);
       res.status(400).json({error: "Could not create user"});
     })
   });
@@ -63,7 +63,7 @@ routes.put('/:id', function (req, res) {
   const id = req.params.id;
   const payload = req.body;
 
-  User.findByIdAndUpdate(id, payload, {new: true})
+  User.findByIdAndUpdate(id, payload, { new: true })
   .then((user) => {
     res.status(200).json(user);
   })
