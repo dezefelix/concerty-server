@@ -17,14 +17,15 @@ app.use(bodyParser.urlencoded({'extended': 'true'}));
 app.use(bodyParser.json());
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
-// app.use(expressJWT({
-//   secret: config.secretKey
-// }).unless({
-//   path: [
-//     {url: '/api/login', methods: ['POST']},
-//     {url: '/api/register', methods: ['POST']}
-//   ]
-// }));
+app.use(expressJWT({
+  secret: config.secretKey
+}).unless({
+  path: [
+    {url: '/api/auth/login', methods: ['POST']},
+    {url: '/api/shows', methods: ['GET']},
+    {url: '/api/artists', methods: ['GET']}
+  ]
+}));
 
 app.set('port', (process.env.PORT || config.env.webPort));
 app.set('env', (process.env.ENV || 'development'));

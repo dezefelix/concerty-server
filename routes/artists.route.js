@@ -10,7 +10,7 @@ routes.get('/', function (req, res) {
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not find all artists"});
+      res.status(400).json({ error: "Could not find all artists" });
     });
 });
 
@@ -21,7 +21,7 @@ routes.get('/:id', function (req, res) {
     .then((artist) => res.status(200).json(artist))
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not find artist"});
+      res.status(400).json({ error: "Could not find artist" });
     });
 });
 
@@ -33,7 +33,7 @@ routes.post('/', function (req, res) {
     .then(() => res.status(200).send(artist))
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not create artist"})
+      res.status(400).json({ error: "Could not create artist" })
     });
 });
 
@@ -47,18 +47,18 @@ routes.put('/:id', function (req, res) {
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not update artist"});
+      res.status(400).json({ error: "Could not update artist" });
     });
 });
 
 routes.delete('/', function (req, res) {
   Artist.remove({})
     .then(() => {
-      res.status(200).json({success: "All artists deleted"});
+      res.status(200).json({ success: "All artists deleted" });
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not delete all artists"});
+      res.status(400).json({ error: "Could not delete all artists" });
     });
 });
 
@@ -71,7 +71,7 @@ routes.delete('/:id', function (req, res) {
     })
     .catch((error) => {
       console.log(error);
-      res.status(422).json({error: "Could not delete artist with given ID"});
+      res.status(422).json({ error: "Could not delete artist with given ID" });
     });
 });
 
