@@ -24,7 +24,6 @@ routes.post('/', function (req, res) {
 });
 
 routes.get('/', function (req, res) {
-  res.contentType('application/json');
 
   User.find({})
     .then((users) => {
@@ -63,7 +62,7 @@ routes.put('/:id', function (req, res) {
   const id = req.params.id;
   const payload = req.body;
 
-  User.findByIdAndUpdate(id, payload)
+  User.findByIdAndUpdate(id, payload, { new: true })
     .then((user) => {
       res.status(200).json(user);
     })

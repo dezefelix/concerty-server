@@ -1,39 +1,39 @@
 const express = require('express');
 const routes = express.Router();
 
-routes.get('/', function (req, res) {
-  res.contentType('application/json');
+const Artist = require('../models/artist.model');
 
-  User.find({})
-    .then((users) => {
-      res.status(200).json(users);
+routes.get('/', function (req, res) {
+  Artist.find({})
+    .then((artists) => {
+      res.status(200).json(artists);
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not find all users"});
+      res.status(400).json({error: "Could not find all artists"});
     });
 });
 
 routes.get('/:id', function (req, res) {
   const id = req.params.id;
 
-  User.findById(id)
-    .then((user) => res.status(200).json(user))
+  Artist.findById(id)
+    .then((artist) => res.status(200).json(artist))
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not find user with given ID"});
+      res.status(400).json({error: "Could not find artist"});
     });
 });
 
 routes.post('/', function (req, res) {
   const payload = req.body;
-  const user = new User(payload);
+  const artist = new Artist(payload);
 
-  user.save()
-    .then(() => res.status(200).send(user))
+  artist.save()
+    .then(() => res.status(200).send(artist))
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not create user"})
+      res.status(400).json({error: "Could not create artist"})
     });
 });
 
@@ -41,40 +41,38 @@ routes.put('/:id', function (req, res) {
   const id = req.params.id;
   const payload = req.body;
 
-  User.findByIdAndUpdate(id, payload, {new: true})
-    .then((user) => {
-      res.status(200).json(user);
+  Artist.findByIdAndUpdate(id, payload, { new: true })
+    .then((artist) => {
+      res.status(200).json(artist);
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not update user with given ID"});
+      res.status(400).json({error: "Could not update artist"});
     });
 });
 
-//delete all users
 routes.delete('/', function (req, res) {
-  User.remove({})
+  Artist.remove({})
     .then(() => {
-      res.status(200).json({success: "All users deleted"});
+      res.status(200).json({success: "All artists deleted"});
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not delete all users"});
+      res.status(400).json({error: "Could not delete all artists"});
     });
 });
 
 routes.delete('/:id', function (req, res) {
   const id = req.params.id;
 
-  User.findByIdAndRemove(id)
-    .then((user) => {
-      res.status(200).json(user);
+  Artist.findByIdAndRemove(id)
+    .then((artist) => {
+      res.status(200).json(artist);
     })
     .catch((error) => {
       console.log(error);
-      res.status(422).json({error: "Could not delete user with given ID"});
+      res.status(422).json({error: "Could not delete artist with given ID"});
     });
 });
-
 
 module.exports = routes;
