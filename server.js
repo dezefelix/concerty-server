@@ -10,7 +10,6 @@ const userRoutes = require('./routes/users.route');
 const artistsRoute = require('./routes/artists.route');
 const showsRoute = require('./routes/shows.route');
 
-module.exports = {};
 let app = express();
 
 app.use(bodyParser.urlencoded({'extended': 'true'}));
@@ -18,7 +17,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
 app.use(expressJWT({
-  secret: config.secretKey
+  secret: config.secretKey,
+  getToken: (req) => {
+    return req.headers.authorization;
+  }
 }).unless({
   path: [
     {url: '/api/auth/login', methods: ['POST']},
