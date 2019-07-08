@@ -10,15 +10,16 @@
   "author": "Felix Boons",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "express-jwt": "^5.3.0",
+    "express-jwt": "^5.3.1",
     "hal": "^1.1.0",
-    "jwt-simple": "^0.5.1",
+    "jwt-simple": "^0.5.6",
     "moment": "latest",
     "mongoose": "^4.13.5",
     "mongoose-double": "0.0.1",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.19.1"
   }
 }

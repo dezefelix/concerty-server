@@ -1,69 +1,62 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongodb = require('./config/mongo.db');
 const expressJWT = require('express-jwt');
 
-const settings = require('./config/env/env');
-const config = require('./config/config.json');
-const authRoutes = require('./routes/auth.route');
+const mongodb = require('./config/mongo.db');
+const config = require('./config/env');
 
-let app = express();
+const authRoutes = require('./routes/auth.route');
+const userRoutes = require('./routes/users.route');
+const artistsRoute = require('./routes/artists.route');
+const showsRoute = require('./routes/shows.route');
 
 module.exports = {};
+let app = express();
 
-app.use(bodyParser.urlencoded({ 'extended': 'true' }));
+app.use(bodyParser.urlencoded({'extended': 'true'}));
 app.use(bodyParser.json());
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
-// Beveilig alle URL routes, tenzij het om /login of /register gaat.
-app.use(expressJWT({
-    secret: config.secretKey
-}).unless({
-    path: [
-        { url: '/api/v1/login', methods: ['POST'] },
-        { url: '/api/v1/register', methods: ['POST'] }
-    ]
-}));
+// app.use(expressJWT({
+//   secret: config.secretKey
+// }).unless({
+//   path: [
+//     {url: '/api/login', methods: ['POST']},
+//     {url: '/api/register', methods: ['POST']}
+//   ]
+// }));
 
-//configure app
-app.set('port', (process.env.PORT || settings.env.webPort));
+app.set('port', (process.env.PORT || config.env.webPort));
 app.set('env', (process.env.ENV || 'development'));
 
-// CORS headers
 app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN || 'http://localhost:4200');
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,authorization');
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    // Pass to next layer of middleware
-    next();
+  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN || 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,authorization');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
 });
 
-//log request method & URL
-app.use('*', function(req, res, next) {
-   console.log(req.method + ' ' + req.originalUrl);
-   next();
+app.use('*', function (req, res, next) {
+  console.log(req.method + ' ' + req.originalUrl);
+  next();
 });
 
-//install routes
-app.use('/api/v1', authRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/artists', artistsRoute);
+app.use('/api/shows', showsRoute);
 
-//fallback route
 app.use('*', function (req, res) {
-    res.status(404);
-    res.json({
-        'error': 'This is not a valid URL.'
-    });
+  res.status(404);
+  res.json({
+    'error': 'This is not a valid URL.'
+  });
 });
 
-//installation complete; start server
-app.listen(settings.env.webPort, function () {
-    console.log('Server listening on ' + app.get('port') + '...');
+// Start server.
+app.listen(config.env.webPort, function () {
+  console.log('Server listening on ' + app.get('port') + '...');
 });
 
 module.exports = app;
