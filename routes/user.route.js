@@ -4,27 +4,7 @@ const routes = express.Router();
 const hasher = require('../helpers/hasher');
 const User = require('../models/user.model');
 
-routes.post('/', function (req, res) {
-  let password = req.body.password;
-  let user = new User(req.body);
-
-  hasher.hash(password, (hash) => {
-    user.password = hash;
-
-    user.save()
-      .then(() => {
-        console.log('User with email: "' + req.body.email + '" created');
-        res.status(200).json(user);
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(400).json({error: "Could not create user"});
-      })
-  });
-});
-
 routes.get('/', function (req, res) {
-
   User.find({})
     .then((users) => {
       res.status(200).json(users);
@@ -47,15 +27,22 @@ routes.get('/:id', function (req, res) {
 });
 
 routes.post('/', function (req, res) {
-  const payload = req.body;
-  const user = new User(payload);
+  let password = req.body.password;
+  let user = new User(req.body);
 
-  user.save()
-    .then(() => res.status(200).send(user))
-    .catch((error) => {
-      console.log(error);
-      res.status(400).json({error: "Could not create user"})
-    });
+  hasher.hash(password, (hash) => {
+    user.password = hash;
+
+    user.save()
+      .then(() => {
+        console.log('User with email: "' + req.body.email + '" created');
+        res.status(200).json(user);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).json({error: "Could not create user"});
+      })
+  });
 });
 
 routes.put('/:id', function (req, res) {
@@ -72,7 +59,6 @@ routes.put('/:id', function (req, res) {
     });
 });
 
-//delete all users
 routes.delete('/', function (req, res) {
   User.remove({})
     .then(() => {

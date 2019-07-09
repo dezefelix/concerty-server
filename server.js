@@ -2,19 +2,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressJWT = require('express-jwt');
 
-const mongodb = require('./config/mongo.db');
-const config = require('./config/env');
+const mongodb = require('./connections/mongo.db');
+const config = require('./config/config');
 
 const authRoutes = require('./routes/auth.route');
-const userRoutes = require('./routes/users.route');
-const artistsRoute = require('./routes/artists.route');
-const showsRoute = require('./routes/shows.route');
+const userRoutes = require('./routes/user.route');
+const artistRoute = require('./routes/artist.route');
+const showRoute = require('./routes/show.route');
+const ticketRoute = require('./routes/ticket.route');
 
-let app = express();
+const app = express();
 
-app.use(bodyParser.urlencoded({'extended': 'true'}));
+app.use(bodyParser.urlencoded({ 'extended': 'true' }));
 app.use(bodyParser.json());
-app.use(bodyParser.json({type: 'application/vnd.api+json'}));
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
 app.use(expressJWT({
   secret: config.secretKey,
@@ -25,7 +26,11 @@ app.use(expressJWT({
   path: [
     {url: '/api/auth/login', methods: ['POST']},
     {url: '/api/shows', methods: ['GET']},
-    {url: '/api/artists', methods: ['GET']}
+    {url: '/api/artists', methods: ['GET']},
+    {url: '/api/tickets', methods: ['GET', 'POST', 'PUT', 'DELETE']},
+
+    // Temporarily for server development...
+    {url: '/api/users', methods: ['GET', 'POST', 'PUT', 'DELETE']},
   ]
 }));
 
@@ -47,8 +52,9 @@ app.use('*', function (req, res, next) {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/artists', artistsRoute);
-app.use('/api/shows', showsRoute);
+app.use('/api/artists', artistRoute);
+app.use('/api/shows', showRoute);
+app.use('/api/tickets', ticketRoute);
 
 app.use('*', function (req, res) {
   res.status(404);

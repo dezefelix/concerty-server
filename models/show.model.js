@@ -34,22 +34,21 @@ const ShowSchema = new Schema({
 }, {strict: true});
 
 ShowSchema.post('save', async (doc) => {
-  await initializeTicketsRemaining(doc);
+  const show = new Show(doc);
+  if (show.ticketsRemaining === null || show.ticketsRemaining === undefined) {
+    await initializeTicketsRemaining(doc);
+  }
 });
 
-function initializeTicketsRemaining(doc) {
-  const show = new Show(doc);
-
-  if (show.ticketsRemaining === null || show.ticketsRemaining === undefined) {
-    show.ticketsRemaining = show.ticketsTotal;
-    show.save()
-      .then(() => {
-        console.log(`Set {ticketsRemaining} for show ${show._id}`)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
+function initializeTicketsRemaining(show) {
+  show.ticketsRemaining = show.ticketsTotal;
+  show.save()
+    .then(() => {
+      console.log(`Set {ticketsRemaining} for show ${show._id}`)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
 }
 
 const Show = mongoose.model('Show', ShowSchema);
@@ -64,6 +63,7 @@ Show.findOne({})
         city: "Amsterdam",
         price: 129.50,
         ticketsTotal: 10000,
+        ticketsRemaining: 9001,
       });
       show.save()
         .then(() => console.log({success: 'INITIAL SHOW CREATED'}))
@@ -74,4 +74,4 @@ Show.findOne({})
     console.log(error);
   });
 
-module.exports = Show;
+module.exports = { Show, ShowSchema };

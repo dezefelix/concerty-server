@@ -5,8 +5,12 @@ const Schema = mongoose.Schema;
 const regEx = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|kpn|jobs|ziggo|nl)\b/);
 
 const UserSchema = new Schema({
-  firstName: {type: String, required: [true, 'First name is required.']},
-  lastName: {type: String, required: [true, 'Last name is required.']},
+  firstName: {
+    type: String, required: [true, 'First name is required.']
+  },
+  lastName: {
+    type: String, required: [true, 'Last name is required.']
+  },
   email: {
     type: String, required: [true, 'Last name is required.'], unique: true,
     validate: {
@@ -14,11 +18,17 @@ const UserSchema = new Schema({
       message: "Please enter a valid e-mail."
     }
   },
+  birthdate: {
+    type: String, required: false
+  },
   password: {
     type: String, required: [true, 'Password is required.'],
     min: [6, 'Password should have at least 6 characters.'],
     max: [32, 'Password should have a maximum of 32 characters.']
-  }
+  },
+  tickets: [{
+    type: Schema.Types.ObjectId, ref: 'Ticket', required: false
+  }]
 }, {
   timestamps: true
 }, {strict: true});
