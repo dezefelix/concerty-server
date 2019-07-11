@@ -74,4 +74,4 @@ Show.findOne({})
     console.log(error);
   });
 
-module.exports = { Show, ShowSchema };
+module.exports = Show;

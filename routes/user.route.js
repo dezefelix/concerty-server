@@ -3,6 +3,7 @@ const routes = express.Router();
 
 const hasher = require('../helpers/hasher');
 const User = require('../models/user.model');
+const Ticket = require('../models/ticket.model');
 
 routes.get('/', function (req, res) {
   User.find({})
@@ -43,6 +44,26 @@ routes.post('/', function (req, res) {
         res.status(400).json({error: "Could not create user"});
       })
   });
+});
+
+routes.post('/:id/tickets', function(req, res) {
+  const id = req.params.id;
+  const t = new Ticket(req.body);
+
+  // User should be able to buy multiple tickets at once and save them all in one call.
+
+  User.findById(id)
+    .then((user) => {
+      console.log(user);
+
+    // Check if user exists.
+    // Only then save ticket(s)
+    // Lastly add tickets to user and update the user.
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({ error: 'Could not find user' });
+    })
 });
 
 routes.put('/:id', function (req, res) {

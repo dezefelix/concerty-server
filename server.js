@@ -25,12 +25,13 @@ app.use(expressJWT({
 }).unless({
   path: [
     {url: '/api/auth/login', methods: ['POST']},
-    {url: '/api/shows', methods: ['GET']},
-    {url: '/api/artists', methods: ['GET']},
-    {url: '/api/tickets', methods: ['GET', 'POST', 'PUT', 'DELETE']},
+    {url: '/api/users', methods: ['POST']},
 
     // Temporarily for server development...
-    {url: '/api/users', methods: ['GET', 'POST', 'PUT', 'DELETE']},
+    {url: '/api/users', methods: ['GET', 'POST', 'PUT']},
+    {url: '/api/artists', methods: ['GET', 'POST', 'PUT']},
+    {url: '/api/tickets', methods: ['GET', 'POST', 'PUT']},
+    {url: '/api/shows', methods: ['GET', 'POST', 'PUT']},
   ]
 }));
 

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const ShowSchema = require('./show.model');
 
 const TicketSchema = new Schema({
   title: {
@@ -14,7 +13,7 @@ const TicketSchema = new Schema({
     type: String, required: [true, 'Customer name is required']
   },
   type: {
-    type: String, required: [true, 'Type is required'], default: 'Standard'
+    type: String, required: [true, 'Type is required'], default: 'Regular'
   },
   purchaseDate: {
     type: String, required: false, default: new Date().toString()
