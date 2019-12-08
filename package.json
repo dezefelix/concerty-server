@@ -1,7 +1,7 @@
 {
-  "name": "alis-vetmeting-server",
+  "name": "concerty-server",
   "version": "1.0.0",
-  "description": "RESTful server (level 3) made in NodeJS",
+  "description": "RESTful-ish API",
   "main": "server.js",
   "scripts": {
     "test": "mocha",
