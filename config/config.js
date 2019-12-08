@@ -9,10 +9,9 @@ const config = {
 
 const secretKey = "kAi3k#J@Lf0*Aal4im91rfk09m3eiLI88AL7If4mekL";
 
-const mongodbURI = process.env.NODE_ENV === 'production' ?
-  'mongodb://' + config.dbUser + ':' + config.dbPassword + '@' + config.dbHost + ':' + config.dbPort + '/' + config.dbDatabase :
-  'mongodb://localhost/' + config.dbDatabase;
+// 'mongodb://' + config.dbUser + ':' + config.dbPassword + '@' + config.dbHost + ':' + config.dbPort + '/' + config.dbDatabase
+const dbUrl = process.env.MONGODB_URI | 'mongodb://localhost/' + config.dbDatabase;
 
 module.exports = {
-  env: config, secretKey, dbUrl: mongodbURI
+  env: config, secretKey, dbUrl: dbUrl
 };
