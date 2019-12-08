@@ -4,7 +4,7 @@ const config = {
   dbPort: process.env.DB_PORT || '',
   dbUser: process.env.DB_USER || '',
   dbPassword: process.env.DB_PASSWORD || '',
-  dbDatabase: process.env.DB_DATABASE || 'Fantastickets'
+  dbDatabase: process.env.DB_DATABASE || 'Concerty'
 };
 
 const secretKey = "kAi3k#J@Lf0*Aal4im91rfk09m3eiLI88AL7If4mekL";

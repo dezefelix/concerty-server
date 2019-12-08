@@ -8,7 +8,7 @@ const config = require('./config/config');
 const authRoutes = require('./routes/auth.route');
 const userRoutes = require('./routes/user.route');
 const artistRoute = require('./routes/artist.route');
-const showRoute = require('./routes/show.route');
+const concertRoute = require('./routes/concert.route');
 const ticketRoute = require('./routes/ticket.route');
 
 const app = express();
@@ -24,14 +24,13 @@ app.use(expressJWT({
   }
 }).unless({
   path: [
-    {url: '/api/auth/login', methods: ['POST']},
-    {url: '/api/users', methods: ['POST']},
+    // For development purposes only.
+    // new RegExp(/.*/, 'i'),
 
-    // Temporarily for server development...
-    {url: '/api/users', methods: ['GET', 'POST', 'PUT']},
-    {url: '/api/artists', methods: ['GET', 'POST', 'PUT']},
-    {url: '/api/tickets', methods: ['GET', 'POST', 'PUT']},
-    {url: '/api/shows', methods: ['GET', 'POST', 'PUT']},
+    {url: '/api/auth/login', methods: ['POST']},
+    {url: '/api/artists', methods: ['GET']},
+    {url: '/api/concerts', methods: ['GET']},
+    {url: '/api/users', methods: ['GET']},
   ]
 }));
 
@@ -40,8 +39,8 @@ app.set('env', (process.env.ENV || 'development'));
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN || 'http://localhost:4200');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin', 'X-Requested-With, content-type, authorization');
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
@@ -54,7 +53,7 @@ app.use('*', function (req, res, next) {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/artists', artistRoute);
-app.use('/api/shows', showRoute);
+app.use('/api/concerts', concertRoute);
 app.use('/api/tickets', ticketRoute);
 
 app.use('*', function (req, res) {

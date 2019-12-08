@@ -8,7 +8,8 @@ const ArtistSchema = new Schema({
   imageUrl: {
     type: String, required: false,
     default: "https://via.placeholder.com/150?text=PLACEHOLDER"
-  }
+  },
+  genre: {type: String, required: [true, 'Genre is required']}
 }, {
   timestamps: true
 }, {strict: true});
@@ -23,7 +24,8 @@ Artist.findOne({})
         name: "De Jeugd van Tegenwoordig",
         biography: "Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret? Tum Quintus:" +
           "Est plane, Piso, ut dicis, inquit. Hoc dixerit potius Ennius: Nimium boni est, cui nihil est mali. Omnes" +
-          " enim iucundum motum, quo sensus hilaretur."
+          " enim iucundum motum, quo sensus hilaretur.",
+        genre: 'Hip-Hop'
       });
       artist.save()
         .then(() => console.log({success: 'INITIAL ARTIST CREATED'}))
