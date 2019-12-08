@@ -3,6 +3,8 @@ const config = require('../config/config');
 
 mongoose.Promise = global.Promise;
 
+console.log(process.env.NODE_ENV);
+console.log(process.env.NODE_ENV);
 console.log(config.dbUrl);
 console.log(config.dbUrl);
 console.log(config.dbUrl);
