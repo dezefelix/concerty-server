@@ -7,7 +7,7 @@ console.log(process.env.MONGODB_URI);
 console.log(process.env.MONGODB_URI);
 console.log(process.env.MONGODB_URI);
 
-mongoose.connect(config.dbUrl, { useNewUrlParser: true });
+mongoose.connect(config.dbUrl.toString(), { useNewUrlParser: true });
 const connection = mongoose.connection
 .once('open', () => console.log('Connected to Mongo on ' + config.dbUrl))
 .on('error', (error) => {
