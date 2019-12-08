@@ -30,7 +30,7 @@ app.use(expressJWT({
     {url: '/api/auth/login', methods: ['POST']},
     {url: '/api/artists', methods: ['GET']},
     {url: '/api/concerts', methods: ['GET']},
-    {url: '/api/users', methods: ['GET']},
+    {url: '/api/users', methods: ['GET', 'POST']},
   ]
 }));
 
