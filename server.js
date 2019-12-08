@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressJWT = require('express-jwt');
 
-const mongodb = require('./connections/mongo.db');
+const mongodb = require('./connections/mongo.db'); // Starts mongodb.
 const config = require('./config/config');
 
 const authRoutes = require('./routes/auth.route');
@@ -37,10 +37,14 @@ app.use(expressJWT({
 app.set('port', (process.env.PORT || config.env.webPort));
 app.set('env', (process.env.ENV || 'development'));
 
+console.log(process.env.ALLOW_ORIGIN);
+console.log(process.env.ALLOW_ORIGIN);
+console.log(process.env.ALLOW_ORIGIN);
+
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN || 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN || 'http://localhost:4200' || 'localhost:4200');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin', 'X-Requested-With, content-type, authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin', 'X-Requested-With, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
