@@ -27,10 +27,10 @@ app.use(expressJWT({
     // For development purposes only.
     // new RegExp(/.*/, 'i'),
 
-    {url: '/api/auth/login', methods: ['POST']},
-    {url: '/api/artists', methods: ['GET']},
-    {url: '/api/concerts', methods: ['GET']},
-    {url: '/api/users', methods: ['GET', 'POST']},
+    {url: '/api/auth/login', methods: ['POST', 'OPTIONS']},
+    {url: '/api/artists', methods: ['GET', 'OPTIONS']},
+    {url: '/api/concerts', methods: ['GET', 'OPTIONS']},
+    {url: '/api/users', methods: ['GET', 'POST', 'OPTIONS']},
   ]
 }));
 
@@ -42,10 +42,6 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Authorization');
   res.header('Access-Control-Allow-Credentials', true);
-  console.log('REQUEST')
-  console.log(req);
-  console.log('RESPONSE')
-  console.log(res);
   next();
 });
 

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="325d73a0-18d7-44f7-b38e-ac7a4023deb4" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -245,7 +246,7 @@
       <workItem from="1575548645455" duration="3340000" />
       <workItem from="1575584757329" duration="1732000" />
       <workItem from="1575825175145" duration="3733000" />
-      <workItem from="1575833068363" duration="2052000" />
+      <workItem from="1575833068363" duration="2198000" />
     </task>
     <servers />
   </component>
@@ -270,6 +271,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1575467470336" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1575835185385">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1575835185385" />
   </component>
   <component name="masterDetails">
     <states>
