@@ -25,7 +25,7 @@ app.use(expressJWT({
 }).unless({
   path: [
     // For development purposes only.
-    new RegExp(/.*/, 'i'),
+    // new RegExp(/.*/, 'i'),
 
     {url: '/api/auth/login', methods: ['POST']},
     {url: '/api/artists', methods: ['GET']},
