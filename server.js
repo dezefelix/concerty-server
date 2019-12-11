@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const expressJWT = require('express-jwt');
+const ExpressJwt = require('express-jwt');
 
-const mongodb = require('./connections/mongo.db'); // Starts mongodb.
+const mongodb = require('./connections/mongo.db'); // Starts mongodb connection.
 const config = require('./config/config');
 
 const authRoutes = require('./routes/auth.route');
@@ -17,16 +17,15 @@ app.use(bodyParser.urlencoded({ 'extended': 'true' }));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-// Protect routes with JWT
-app.use(expressJWT({
+// Set route permissions.
+app.use(ExpressJwt({
   secret: config.secretKey,
   getToken: (req) => {
     return req.headers.authorization;
   }
 }).unless({
   path: [
-    // For development purposes only.
-    // new RegExp(/.*/, 'i'),
+    // new RegExp(/.*/, 'i'), // For development purposes only.
 
     {url: '/api/auth/login', methods: ['POST', 'OPTIONS']},
     {url: '/api/artists', methods: ['GET', 'OPTIONS']},
@@ -37,7 +36,7 @@ app.use(expressJWT({
 
 app.set('port', (process.env.PORT || config.env.webPort));
 
-// Set CORS
+// Set CORS.
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', req.headers.origin); // Allow all origins (handy for development).
   // res.header('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN);
@@ -52,7 +51,7 @@ app.use('*', function (req, res, next) {
   next();
 });
 
-// Configure routes
+// Configure routes.
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/artists', artistRoute);

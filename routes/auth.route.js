@@ -2,6 +2,7 @@ const express = require('express');
 const routes = express.Router();
 
 const hasher = require('../helpers/hasher');
+const auth = require('../helpers/auth');
 const User = require('../models/user.model');
 
 routes.post('/login', function (req, res) {
@@ -30,6 +31,10 @@ routes.post('/login', function (req, res) {
     })
 });
 
-routes.get(/);
+routes.get('renew/:token', function(req, res) {
+  const token = req.params.token;
+  const newToken = auth.renewToken(token);
+  res.status(200).json({ token: token });
+};
 
 module.exports = routes;
