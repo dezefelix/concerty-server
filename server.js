@@ -35,11 +35,18 @@ app.use(expressJWT({
 }));
 
 app.set('port', (process.env.PORT || config.env.webPort));
-app.set('env', (process.env.ENV || 'development'));
+app.set('env', (process.env.ENV || 'DEVELOPMENT'));
+
+const env = app.get('env');
+console.log(env);
+console.log(env);
+console.log(env);
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN || 'http://localhost:4200');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  console.log(req.headers.origin);
+  console.log(req.headers.origin);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // OPTIONS is required for successful request.
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Authorization');
   res.header('Access-Control-Allow-Credentials', true);
   next();
