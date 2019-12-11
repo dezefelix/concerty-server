@@ -14,7 +14,7 @@ function hash(password, cb) {
 function compare(password, user, cb) {
   bcrypt.compare(password, user.password, function (err, res) {
     if (res) {
-      cb(auth.encodeToken(user.email));
+      cb(auth.encodeToken(user.email, user.role));
     } else {
       cb(null);
       console.log(err);

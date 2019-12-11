@@ -30,4 +30,6 @@ routes.post('/login', function (req, res) {
     })
 });
 
+routes.get(/);
+
 module.exports = routes;

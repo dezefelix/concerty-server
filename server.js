@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ 'extended': 'true' }));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
+// Protect routes with JWT
 app.use(expressJWT({
   secret: config.secretKey,
   getToken: (req) => {
@@ -36,6 +37,7 @@ app.use(expressJWT({
 
 app.set('port', (process.env.PORT || config.env.webPort));
 
+// Set CORS
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', req.headers.origin); // Allow all origins (handy for development).
   // res.header('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN);
@@ -50,6 +52,7 @@ app.use('*', function (req, res, next) {
   next();
 });
 
+// Configure routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/artists', artistRoute);

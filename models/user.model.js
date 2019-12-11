@@ -26,6 +26,9 @@ const UserSchema = new Schema({
     min: [6, 'Password should have at least 6 characters.'],
     max: [32, 'Password should have a maximum of 32 characters.']
   },
+  role: {
+    type: String,
+  },
   tickets: [{
     type: Schema.Types.ObjectId, ref: 'Ticket', required: false
   }]
