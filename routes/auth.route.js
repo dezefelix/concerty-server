@@ -5,13 +5,12 @@ const hasher = require('../helpers/hasher');
 const auth = require('../helpers/auth');
 const User = require('../models/user.model');
 
-routes.post('/login', function (req, res) {
+routes.post('/login', ((req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  //check for matching user in DB
   User.findOne({email: email})
-    .then((user) => {
+    .then(user => {
       if (user) {
         hasher.compare(password, user, (token) => {
           if (token) {
@@ -19,22 +18,20 @@ routes.post('/login', function (req, res) {
           } else {
             res.status(400).json({error: "Invalid credentials"})
           }
-
         });
       } else {
         res.status(400).json({error: "Invalid credentials"});
       }
     })
     .catch((error) => {
-      console.log(error);
       res.status(400).json({error: "Something went wrong"})
     })
-});
+}));
 
 routes.get('renew/:token', function(req, res) {
   const token = req.params.token;
   const newToken = auth.renewToken(token);
-  res.status(200).json({ token: token });
+  res.status(200).json({ token: newToken });
 };
 
 module.exports = routes;
