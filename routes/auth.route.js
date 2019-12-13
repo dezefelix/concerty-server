@@ -28,10 +28,10 @@ routes.post('/login', ((req, res) => {
     })
 }));
 
-routes.get('renew/:token', function(req, res) {
+routes.get('renew/:token', ((req, res) => {
   const token = req.params.token;
   const newToken = auth.renewToken(token);
   res.status(200).json({ token: newToken });
-};
+}));
 
 module.exports = routes;

@@ -30,7 +30,7 @@ app.use(ExpressJwt({
     {url: '/api/auth/login', methods: ['POST', 'OPTIONS']},
     {url: '/api/artists', methods: ['GET', 'OPTIONS']},
     {url: '/api/concerts', methods: ['GET', 'OPTIONS']},
-    {url: '/api/users', methods: ['GET', 'POST', 'OPTIONS']},
+    {url: '/api/users', methods: ['POST', 'OPTIONS']}, // GET used to be here
   ]
 }));
 

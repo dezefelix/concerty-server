@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="325d73a0-18d7-44f7-b38e-ac7a4023deb4" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/role.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/role.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/artist.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/artist.route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/auth.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/user.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/user.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +122,7 @@
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -250,7 +257,8 @@
       <workItem from="1576070754850" duration="1603000" />
       <workItem from="1576073550399" duration="1472000" />
       <workItem from="1576075768453" duration="516000" />
-      <workItem from="1576076382693" duration="1824000" />
+      <workItem from="1576076382693" duration="1863000" />
+      <workItem from="1576252331214" duration="4538000" />
     </task>
     <servers />
   </component>
@@ -271,9 +279,14 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="616" y="240" key="run.anything.popup" timestamp="1575467470336">
+    <state x="592" y="222" width="736" height="596" key="find.popup" timestamp="1576253555071">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="592" y="222" width="736" height="596" key="find.popup/0.0.1920.1040/-341.-1440.2560.1400@0.0.1920.1040" timestamp="1576253555071" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1576252726955">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/-341.-1440.2560.1400@0.0.1920.1040" timestamp="1576252726955" />
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1575467470336" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1575835185385">
       <screen x="0" y="0" width="1920" height="1040" />

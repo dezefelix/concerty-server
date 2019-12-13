@@ -5,25 +5,50 @@ const hasher = require('../helpers/hasher');
 const User = require('../models/user.model');
 const Ticket = require('../models/ticket.model');
 
+const auth = require('../helpers/auth');
+
 routes.get('/', function (req, res) {
-  User.find({})
-    .then((users) => {
-      res.status(200).json(users);
+  auth.isAdministrator(req)
+    .then(_ => {
+      User.find({})
+        .then((users) => {
+          res.status(200).json(users);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(400).json({error: "Could not find all users"})
+        });
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(400).json({error: "Could not find all users"});
+    .catch(_ => {
+      res.status(403).json({error: "Not authorized"})
     });
 });
 
 routes.get('/:id', function (req, res) {
   const id = req.params.id;
+  const token = req.headers.authorization;
+  let userEmail;
+
+  // Get user email for authorization.
+  auth.decodeToken(token, (err, payload) => {
+    if (err) {
+      res.status(403).json({error: "Not authorized"})
+    } else {
+      userEmail = payload.sub
+    }
+  });
 
   User.findById(id)
-    .then((user) => res.status(200).json(user))
+    .then(user => {
+      if (userEmail === user.email) {
+        res.status(200).json(user);
+      } else {
+        res.status(403).json({error: "Not authorized"})
+      }
+    })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not find user with given ID"});
+      res.status(400).json({error: "Could not find user with given ID"})
     });
 });
 
@@ -37,11 +62,11 @@ routes.post('/', function (req, res) {
     user.save()
       .then(() => {
         console.log('User with email: "' + req.body.email + '" created');
-        res.status(200).json(user);
+        res.status(200).json(user)
       })
       .catch((error) => {
         console.log(error);
-        res.status(400).json({error: "Could not create user"});
+        res.status(400).json({error: "Could not create user"})
       })
   });
 });
@@ -62,7 +87,7 @@ routes.post('/:id/tickets', function(req, res) {
     })
     .catch((err) => {
       console.log(err);
-      res.status(400).json({ error: 'Could not find user' });
+      res.status(400).json({ error: 'Could not find user' })
     })
 });
 
@@ -76,18 +101,18 @@ routes.put('/:id', function (req, res) {
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not update user with given ID"});
+      res.status(400).json({error: "Could not update user with given ID"})
     });
 });
 
 routes.delete('/', function (req, res) {
   User.remove({})
     .then(() => {
-      res.status(200).json({success: "All users deleted"});
+      res.status(200).json({success: "All users deleted"})
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not delete all users"});
+      res.status(400).json({error: "Could not delete all users"})
     });
 });
 
@@ -96,11 +121,11 @@ routes.delete('/:id', function (req, res) {
 
   User.findByIdAndRemove(id)
     .then((user) => {
-      res.status(200).json(user);
+      res.status(200).json(user)
     })
     .catch((error) => {
       console.log(error);
-      res.status(422).json({error: "Could not delete user with given ID"});
+      res.status(422).json({error: "Could not delete user with given ID"})
     });
 });
 

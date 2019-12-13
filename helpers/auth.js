@@ -1,6 +1,7 @@
 const config = require('../config/config');
 const moment = require('moment');
 const jwt = require('jwt-simple');
+const role = require('../helpers/role');
 
 const expiryDuration = 1;
 const expiryMetric = 'days';
@@ -14,18 +15,6 @@ function encodeToken(email, role) {
   };
 
   return jwt.encode(payload, config.secretKey);
-}
-
-// TODO: Should create a function in auth route to use this function.
-function renewToken(token) {
-  try {
-    const payload = jwt.decode(token, config.secretKey);
-    payload.exp = moment().add(expiryDuration, expiryMetric);
-    payload.iat = moment().unix();
-    return jwt.encode(payload, config.secretKey);
-  } catch (err) {
-    return null;
-  }
 }
 
 function decodeToken(token, cb) {
@@ -43,8 +32,39 @@ function decodeToken(token, cb) {
   }
 }
 
+// TODO: Should create a function in auth route to use this function.
+function renewToken(token) {
+  try {
+    const payload = jwt.decode(token, config.secretKey);
+    payload.exp = moment().add(expiryDuration, expiryMetric);
+    payload.iat = moment().unix();
+    return jwt.encode(payload, config.secretKey);
+  } catch (err) {
+    return null;
+  }
+}
+
+function isAdministrator(req) {
+  const token = req.headers.authorization;
+
+  return new Promise((resolve, reject) => {
+    decodeToken(token, (err, payload) => {
+      if (err) {
+        reject();
+      } else {
+        if (payload.role === 'ADMIN') {
+          resolve();
+        } else {
+          reject();
+        }
+      }
+    });
+  });
+}
+
 module.exports = {
   encodeToken,
+  decodeToken,
   renewToken,
-  decodeToken
+  isAdministrator
 };

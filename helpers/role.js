@@ -1,3 +1,6 @@
-module.exports = {
-  ADMIN, USER
+const Role = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
 };
+
+module.exports = Role

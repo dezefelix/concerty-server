@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const hasher = require('../helpers/hasher');
+const Role = require('../helpers/role');
 
 const Schema = mongoose.Schema;
 const regEx = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|kpn|jobs|ziggo|nl)\b/);
@@ -28,6 +29,8 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
+    required: false,
+    default: Role.USER
   },
   tickets: [{
     type: Schema.Types.ObjectId, ref: 'Ticket', required: false
@@ -48,6 +51,7 @@ hasher.hash('admin', (hash) => [
           lastName: 'Doe',
           email: 'admin@mail.com',
           password: hash,
+          role: Role.ADMIN
         });
         user.save()
           .then(() => console.log({success: 'INITIAL USER CREATED'}))
