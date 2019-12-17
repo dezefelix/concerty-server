@@ -1,7 +1,6 @@
-const config = require('../config/config');
-const moment = require('moment');
-const jwt = require('jwt-simple');
-const role = require('../helpers/role');
+const config = require("../config/config");
+const moment = require("moment");
+const jwt = require("jwt-simple");
 
 const expiryDuration = 1;
 const expiryMetric = 'days';
@@ -20,15 +19,17 @@ function encodeToken(email, role) {
 function decodeToken(token, cb) {
   try {
     const payload = jwt.decode(token, config.secretKey);
-
     const now = moment().unix();
+    console.log(payload);
+
     if (now > payload.exp) {
-      cb('Token expired', null);
+      cb('Log in to authorize', null);
     } else {
       cb(null, payload);
     }
   } catch (err) {
-    cb(err, null);
+    console.log(err);
+    cb('No authorization', null);
   }
 }
 
@@ -44,27 +45,8 @@ function renewToken(token) {
   }
 }
 
-function isAdministrator(req) {
-  const token = req.headers.authorization;
-
-  return new Promise((resolve, reject) => {
-    decodeToken(token, (err, payload) => {
-      if (err) {
-        reject();
-      } else {
-        if (payload.role === 'ADMIN') {
-          resolve();
-        } else {
-          reject();
-        }
-      }
-    });
-  });
-}
-
 module.exports = {
   encodeToken,
   decodeToken,
-  renewToken,
-  isAdministrator
+  renewToken
 };

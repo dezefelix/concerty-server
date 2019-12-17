@@ -2,7 +2,7 @@ const express = require('express');
 const routes = express.Router();
 
 const hasher = require('../helpers/hasher');
-const auth = require('../helpers/auth');
+const auth = require('../helpers/authenticator');
 const User = require('../models/user.model');
 
 routes.post('/login', ((req, res) => {

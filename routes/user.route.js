@@ -1,54 +1,32 @@
 const express = require('express');
 const routes = express.Router();
 
+const authorizer = require('../helpers/authorizer');
 const hasher = require('../helpers/hasher');
 const User = require('../models/user.model');
 const Ticket = require('../models/ticket.model');
 
-const auth = require('../helpers/auth');
 
 routes.get('/', function (req, res) {
-  auth.isAdministrator(req)
-    .then(_ => {
-      User.find({})
-        .then((users) => {
-          res.status(200).json(users);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(400).json({error: "Could not find all users"})
-        });
+  User.find({})
+    .then((users) => {
+      res.status(200).json(users);
     })
-    .catch(_ => {
-      res.status(403).json({error: "Not authorized"})
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json({error: "Could not find all users"})
     });
 });
 
 routes.get('/:id', function (req, res) {
   const id = req.params.id;
-  const token = req.headers.authorization;
-  let userEmail;
-
-  // Get user email for authorization.
-  auth.decodeToken(token, (err, payload) => {
-    if (err) {
-      res.status(403).json({error: "Not authorized"})
-    } else {
-      userEmail = payload.sub
-    }
-  });
 
   User.findById(id)
     .then(user => {
-      if (userEmail === user.email) {
-        res.status(200).json(user);
-      } else {
-        res.status(403).json({error: "Not authorized"})
-      }
+      res.status(200).json(user);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(400).json({error: "Could not find user with given ID"})
+    .catch(_ => {
+      res.status(403).json({error: "Not authorized"})
     });
 });
 
@@ -121,7 +99,13 @@ routes.delete('/:id', function (req, res) {
 
   User.findByIdAndRemove(id)
     .then((user) => {
-      res.status(200).json(user)
+      authorizer.isSelf(req, user)
+        .then(_ => {
+          res.status(200).json(user);
+        })
+        .catch(_ => {
+          res.status(403).json({error: "Not authorized"})
+        });
     })
     .catch((error) => {
       console.log(error);

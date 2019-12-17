@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt-nodejs');
 const saltRounds = 10;
 
-const auth = require('./auth');
+const auth = require('./authenticator');
 
 function hash(password, cb) {
   bcrypt.genSalt(saltRounds, function (err, salt) {

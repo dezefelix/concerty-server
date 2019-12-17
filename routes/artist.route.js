@@ -4,7 +4,7 @@ const guard = require('express-jwt-permissions')();
 
 const Artist = require('../models/artist.model');
 
-routes.get('/', guard.check('ADMIN'), function (req, res) {
+routes.get('/', function (req, res) {
   Artist.find({})
     .then((artists) => {
       res.status(200).json(artists);
