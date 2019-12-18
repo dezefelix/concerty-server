@@ -6,9 +6,8 @@ function isAdministrator(token) {
       if (err) {
         reject();
       } else {
-        console.log(payload);
-        console.log(payload.role);
         console.log(token);
+        console.log(payload.role);
 
         if (payload.role === 'ADMIN') {
           resolve();

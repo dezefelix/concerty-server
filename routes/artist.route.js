@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const guard = require('express-jwt-permissions')();
+// const guard = require('express-jwt-permissions')();
 
 const Artist = require('../models/artist.model');
 
@@ -68,6 +68,7 @@ routes.delete('/:id', function (req, res) {
 
   Artist.findByIdAndRemove(id)
     .then((artist) => {
+      console.log('Deleting artist ' + artist.name);
       res.status(200).json(artist);
     })
     .catch((error) => {
