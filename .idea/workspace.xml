@@ -4,8 +4,6 @@
     <list default="true" id="325d73a0-18d7-44f7-b38e-ac7a4023deb4" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/concert.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/concert.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/artist.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/artist.route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/concert.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/concert.route.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,7 +263,7 @@
       <workItem from="1576633429155" duration="499000" />
       <workItem from="1576671504381" duration="39000" />
       <workItem from="1576672063380" duration="23000" />
-      <workItem from="1576682082928" duration="70000" />
+      <workItem from="1576682082928" duration="386000" />
     </task>
     <servers />
   </component>
