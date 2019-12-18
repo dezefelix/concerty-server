@@ -11,9 +11,6 @@ const ConcertSchema = new Schema({
   venue: {
     type: String, required: [true, 'Venue is required.']
   },
-  city: {
-    type: String, required: [true, 'City is required']
-  },
   date: {
     type: String, required: false, default: new Date().toString()
   },
@@ -60,7 +57,6 @@ Concert.findOne({})
       const concert = new Concert({
         title: "De Jeugd van Tegenwoordig",
         venue: "Ziggo Dome",
-        city: "Amsterdam",
         price: 129.50,
         ticketsTotal: 10000,
         ticketsRemaining: 9001,

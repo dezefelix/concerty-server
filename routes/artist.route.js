@@ -30,7 +30,7 @@ routes.post('/', function (req, res) {
   const artist = new Artist(payload);
 
   artist.save()
-    .then(() => res.status(200).send(artist))
+    .then(_ => res.status(200).send(artist))
     .catch((error) => {
       console.log(error);
       res.status(400).json({ error: "Could not create artist" })
@@ -55,10 +55,10 @@ routes.delete('/:id', function (req, res) {
   const id = req.params.id;
 
   Artist.findByIdAndRemove(id)
-    .then((artist) => {
-      res.status(200).json(artist);
+    .then(artist => {
+      res.status(200).send(artist);
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error);
       res.status(422).json({ error: "Could not delete artist with given ID" });
     });

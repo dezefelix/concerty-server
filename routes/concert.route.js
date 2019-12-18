@@ -30,8 +30,7 @@ routes.post('/', function (req, res) {
 
   concert.save()
     .then(() => {
-      console.log('New concert created');
-      res.status(200).json(concert);
+      res.status(200).send(concert);
     })
     .catch((error) => {
       console.log(error);
@@ -68,10 +67,10 @@ routes.delete('/:id', function (req, res) {
   const id = req.params.id;
 
   Concert.findByIdAndRemove(id)
-    .then((concert) => {
-      res.status(200).json(concert);
+    .then(concert => {
+      res.status(200).send(concert);
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error);
       res.status(422).json({error: "Could not delete concert"});
     });
