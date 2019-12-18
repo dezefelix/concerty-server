@@ -34,7 +34,7 @@ app.use(ExpressJwt({
   ]
 }));
 
-app.set('port', (process.env.PORT || config.env.webPort));
+app.set('port', (process.env.PORT || config.env.port));
 
 // Set CORS.
 app.use(function (req, res, next) {
@@ -66,7 +66,7 @@ app.use('*', function (req, res) {
 });
 
 // Start server.
-app.listen(config.env.webPort, function () {
+app.listen(config.env.port, function () {
   console.log('Server listening on ' + app.get('port') + '...');
 });
 

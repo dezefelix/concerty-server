@@ -1,6 +1,5 @@
 const express = require('express');
 const routes = express.Router();
-// const guard = require('express-jwt-permissions')();
 
 const Artist = require('../models/artist.model');
 
@@ -52,17 +51,6 @@ routes.put('/:id', function (req, res) {
     });
 });
 
-routes.delete('/', function (req, res) {
-  Artist.remove({})
-    .then(() => {
-      res.status(200).json({ success: "All artists deleted" });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(400).json({ error: "Could not delete all artists" });
-    });
-});
-
 routes.delete('/:id', function (req, res) {
   const id = req.params.id;
   console.log('About to remove artist');
@@ -75,6 +63,17 @@ routes.delete('/:id', function (req, res) {
     .catch((error) => {
       console.log(error);
       res.status(422).json({ error: "Could not delete artist with given ID" });
+    });
+});
+
+routes.delete('/', function (req, res) {
+  Artist.remove({})
+    .then(() => {
+      res.status(200).json({ success: "All artists deleted" });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json({ error: "Could not delete all artists" });
     });
 });
 
