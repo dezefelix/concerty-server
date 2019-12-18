@@ -53,11 +53,9 @@ routes.put('/:id', function (req, res) {
 
 routes.delete('/:id', function (req, res) {
   const id = req.params.id;
-  console.log('About to remove artist');
 
   Artist.findByIdAndRemove(id)
     .then((artist) => {
-      console.log('Deleting artist ' + artist.name);
       res.status(200).json(artist);
     })
     .catch((error) => {
