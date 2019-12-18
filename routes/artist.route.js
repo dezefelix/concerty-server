@@ -65,6 +65,7 @@ routes.delete('/', function (req, res) {
 
 routes.delete('/:id', function (req, res) {
   const id = req.params.id;
+  console.log('About to remove artist');
 
   Artist.findByIdAndRemove(id)
     .then((artist) => {
