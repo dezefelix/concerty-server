@@ -27,7 +27,6 @@ routes.get('/:id', function (req, res) {
 
 routes.post('/', function (req, res) {
   const concert = new Concert(req.body);
-  console.log(concert);
 
   concert.save()
     .then(() => {
