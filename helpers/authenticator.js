@@ -2,7 +2,7 @@ const config = require("../config/config");
 const moment = require("moment");
 const jwt = require("jwt-simple");
 
-const expiryDuration = 1;
+const expiryDuration = 10;
 const expiryMetric = 'days';
 
 function encodeToken(email, role) {
