@@ -47,7 +47,7 @@ function initializeTicketsRemaining(concert) {
   concert.ticketsRemaining = concert.ticketsTotal;
   concert.save()
     .then(() => {
-      console.log(`Set {ticketsRemaining} for concert ${concert._id}`)
+      console.log(`Initialized remaining tickets for new concert with ID [${concert._id}]`)
     })
     .catch((err) => {
       console.log(err);
