@@ -12,7 +12,7 @@ const ConcertSchema = new Schema({
     type: String, required: [true, 'Venue is required.']
   },
   date: {
-    type: String, required: false, default: new Date().toString()
+    type: String, required: [true, 'Date is required']
   },
   price: {
     type: SchemaTypes.Double, required: [true, 'Price is required']
@@ -63,6 +63,7 @@ Concert.findOne({})
       const concert = new Concert({
         title: "De Jeugd van Tegenwoordig",
         venue: "Ziggo Dome",
+        date: new Date(),
         price: 129.50,
         ticketsTotal: 10000,
         ticketsRemaining: 9001,
