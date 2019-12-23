@@ -21,11 +21,11 @@ Artist.findOne({})
   .then((artist) => {
     if (!artist) {
       const artist = new Artist({
-        name: "De Jeugd van Tegenwoordig",
+        name: "De Jeugd Van Tegenwoordig",
         biography: "Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret? Tum Quintus:" +
           "Est plane, Piso, ut dicis, inquit. Hoc dixerit potius Ennius: Nimium boni est, cui nihil est mali. Omnes" +
           " enim iucundum motum, quo sensus hilaretur.",
-        genre: 'Hip-Hop'
+        genre: 'HIP_HOP'
       });
       artist.save()
         .then(() => console.log({success: 'INITIAL ARTIST CREATED'}))

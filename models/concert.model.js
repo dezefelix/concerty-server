@@ -29,7 +29,7 @@ const ConcertSchema = new Schema({
   ticketsRemaining: {
     type: Number, required: false
   },
-  artists: [{
+  artistIds: [{
     type: Schema.Types.ObjectId, ref: 'Artist', required: false
   }]
 }, {
@@ -64,7 +64,7 @@ Concert.findOne({})
         title: "De Jeugd van Tegenwoordig",
         venue: "Ziggo Dome",
         date: new Date(),
-        price: 129.50,
+        price: 123,
         ticketsTotal: 10000,
         ticketsRemaining: 9001,
       });
