@@ -29,7 +29,7 @@ const ConcertSchema = new Schema({
   ticketsRemaining: {
     type: Number, required: false
   },
-  artistIds: [{
+  artists: [{
     type: Schema.Types.ObjectId, ref: 'Artist', required: false
   }]
 }, {
