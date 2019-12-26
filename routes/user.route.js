@@ -4,8 +4,7 @@ const routes = express.Router();
 const authorizer = require('../helpers/authorizer');
 const hasher = require('../helpers/hasher');
 const User = require('../models/user.model');
-const Ticket = require('../models/ticket.model');
-
+const Concert = require('../models/concert.model');
 
 routes.get('/', function (req, res) {
   User.find({})
@@ -51,17 +50,36 @@ routes.post('/', function (req, res) {
 
 routes.post('/:id/tickets', function(req, res) {
   const id = req.params.id;
-  const t = new Ticket(req.body);
-
-  // User should be able to buy multiple tickets at once and save them all in one call.
+  const ticket = req.body;
 
   User.findById(id)
     .then((user) => {
-      console.log(user);
+      user.tickets.push(ticket);
+      const saveUserTickets = user.save();
+      const concertId = req.body.concert;
+      let ticketAmount = 0;
 
-    // Check if user exists.
-    // Only then save ticket(s)
-    // Lastly add tickets to user and update the user.
+      for (const item of ticket.items) {
+        ticketAmount += item.amount;
+      }
+
+      let subtractConcertTickets;
+      Concert.findById(concertId)
+        .then(concert => {
+            concert.ticketsRemaining = concert.ticketsRemaining - ticketAmount;
+            subtractConcertTickets = concert.save();
+
+          Promise.all([saveUserTickets, subtractConcertTickets])
+            .then(result => {
+              console.log(result);
+              res.status(200).send(result);
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(409).send(err.message);
+            });
+        })
+        .catch(err => console.log(err));
     })
     .catch((err) => {
       console.log(err);

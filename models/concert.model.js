@@ -27,7 +27,7 @@ const ConcertSchema = new Schema({
     type: Number, required: [true, 'The total ticket amount is required']
   },
   ticketsRemaining: {
-    type: Number, required: false
+    type: Number, required: false, min: [0, 'There are no tickets remaining'],
   },
   artists: [{
     type: Schema.Types.ObjectId, ref: 'Artist', required: false

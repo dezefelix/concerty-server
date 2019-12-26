@@ -9,7 +9,6 @@ const authRoutes = require('./routes/auth.route');
 const userRoutes = require('./routes/user.route');
 const artistRoute = require('./routes/artist.route');
 const concertRoute = require('./routes/concert.route');
-const ticketRoute = require('./routes/ticket.route');
 
 const app = express();
 
@@ -56,7 +55,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/artists', artistRoute);
 app.use('/api/concerts', concertRoute);
-app.use('/api/tickets', ticketRoute);
 
 app.use('*', function (req, res) {
   res.status(404);

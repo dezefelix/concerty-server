@@ -3,6 +3,8 @@ const routes = express.Router();
 
 const Ticket = require('../models/ticket.model');
 
+// Essentially unused cuz i switched to embedded docs and am neglecting the RUD from CRUD in this assignment.
+
 routes.get('/', function (req, res) {
   Ticket.find({})
     .then((tickets) => {
@@ -18,7 +20,7 @@ routes.get('/:id', function (req, res) {
   const id = req.params.id;
 
   Ticket.findById(id)
-    .then((ticket) => res.status(200).json(ticket))
+    .then(ticket => res.status(200).json(ticket))
     .catch((error) => {
       console.log(error);
       res.status(400).json({error: "Could not find ticket"});
