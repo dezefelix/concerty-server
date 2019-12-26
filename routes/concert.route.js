@@ -1,16 +1,11 @@
 const express = require('express');
 const routes = express.Router();
 const Concert = require('../models/concert.model');
-const { convertArtistIdArraysToArtistArrays,
-  convertArtistArraysToArtistIdArrays } = require("../helpers/array-converter");
 
 routes.get('/', function (req, res) {
   Concert.find({})
     .then(concerts => {
-      convertArtistIdArraysToArtistArrays(concerts)
-        .then(_concerts => {
-          res.status(200).json(_concerts)
-        });
+      res.status(200).json(concerts);
     })
     .catch((error) => {
       console.log(error);
@@ -32,40 +27,29 @@ routes.get('/:id', function (req, res) {
 });
 
 routes.post('/', function (req, res) {
-  let payload = req.body;
+  let concert = new Concert(req.body);
 
-  convertArtistArraysToArtistIdArrays([payload])
-    .then(concerts => {
-      // console.log(concerts);
-      const concert = new Concert(concerts[0]);
-
-      concert.save()
-        .then(() => {
-          res.status(200).send(concert);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(400).json({error: "Could not create concert"});
-        })
-    });
+  concert.save()
+    .then(() => {
+      res.status(200).send(concert);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json({error: "Could not create concert"});
+    })
 });
 
 routes.put('/:id', function (req, res) {
   const id = req.params.id;
   let payload = req.body;
 
-  convertArtistArraysToArtistIdArrays([payload])
-    .then(concerts => {
-      payload = concerts[0];
-
-      Concert.findByIdAndUpdate(id, payload, {new: true})
-        .then((concert) => {
-          res.status(200).json(concert);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(400).json({error: "Could not update concert"});
-        });
+  Concert.findByIdAndUpdate(id, payload, {new: true})
+    .then((concert) => {
+      res.status(200).json(concert);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json({error: "Could not update concert"});
     });
 });
 
