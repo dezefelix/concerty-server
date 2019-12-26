@@ -1,16 +1,20 @@
 const express = require('express');
 const routes = express.Router();
-
 const Concert = require('../models/concert.model');
+const Artist = require('../models/artist.model');
+const {convertArtistIdArraysToArtistArrays} = require("../helpers/array-helper");
 
 routes.get('/', function (req, res) {
   Concert.find({})
-    .then((shows) => {
-      res.status(200).json(shows);
+    .then(concerts => {
+      convertArtistIdArraysToArtistArrays(concerts)
+        .then(_concerts => {
+          res.status(200).json(_concerts)
+      });
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not find all shows"});
+      res.status(400).json({error: "Could not find all concerts"});
     });
 });
 
@@ -18,10 +22,12 @@ routes.get('/:id', function (req, res) {
   const id = req.params.id;
 
   Concert.findById(id)
-    .then((show) => res.status(200).json(show))
+    .then(concert => {
+      res.status(200).json(concert);
+    })
     .catch((error) => {
       console.log(error);
-      res.status(400).json({error: "Could not find show with given ID"});
+      res.status(400).json({error: "Could not find concert with given ID"});
     });
 });
 
