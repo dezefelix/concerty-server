@@ -22,7 +22,6 @@ function convertArtistIdArraysToArtistArrays(concerts) {
               if (counter <= 0) {
                 concert.artists = artists;
                 _concerts.push(concert);
-                console.log(_concerts.length);
 
                 if (_concerts.length === concertAmount  ) {
                   resolve(_concerts);
@@ -39,15 +38,18 @@ function convertArtistArraysToArtistIdArrays(concerts) {
   return new Promise(resolve => {
     const _concerts = [];
 
-    for (const concert in concerts) {
-      const artists = concert.artists;
-      const artistIds = [];
+    for (const concert of concerts) {
+      if (concert.artists && concert.artists.length > 0) {
+        const artists = concert.artists;
+        const artistIds = [];
 
-      for (const artist of artists) {
-        artistIds.push(artist);
+        for (const artist of artists) {
+          artistIds.push(artist);
+        }
+
+        concert.artists = artistIds;
       }
 
-      concert.artists = artistIds;
       _concerts.push(concert);
     }
 
