@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const hasher = require('../helpers/hasher');
 const Role = require('../helpers/role');
+const TicketSchema = require('./ticket.model');
 
 const Schema = mongoose.Schema;
 const regEx = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|kpn|jobs|ziggo|nl)\b/);
@@ -32,9 +33,7 @@ const UserSchema = new Schema({
     required: false,
     default: Role.USER
   },
-  tickets: [{
-    type: Schema.Types.ObjectId, ref: 'Ticket', required: false
-  }]
+  tickets: [TicketSchema]
 }, {
   timestamps: true
 }, {strict: true});
