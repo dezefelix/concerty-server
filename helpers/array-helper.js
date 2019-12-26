@@ -35,11 +35,27 @@ function convertArtistIdArraysToArtistArrays(concerts) {
   });
 }
 
-function convertToConcertArray(idArray) {
+function convertArtistArraysToArtistIdArrays(concerts) {
+  return new Promise(resolve => {
+    const _concerts = [];
 
+    for (const concert in concerts) {
+      const artists = concert.artists;
+      const artistIds = [];
+
+      for (const artist of artists) {
+        artistIds.push(artist);
+      }
+
+      concert.artists = artistIds;
+      _concerts.push(concert);
+    }
+
+    resolve(_concerts);
+  })
 }
 
 module.exports = {
   convertArtistIdArraysToArtistArrays,
-  convertToConcertArray
+  convertArtistArraysToArtistIdArrays
 };
