@@ -14,7 +14,7 @@ routes.post('/login', ((req, res) => {
       if (user) {
         hasher.compare(password, user, (token) => {
           if (token) {
-            res.status(200).json({token: token});
+            res.status(200).json({token, user});
           } else {
             res.status(400).json({error: "Invalid credentials"})
           }
