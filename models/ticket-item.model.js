@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('mongoose-double')(mongoose);
 const Schema = mongoose.Schema;
 
-const TicketItem = new Schema({
+const TicketItemSchema = new Schema({
   type: {
     type: String, required: [true, 'Type is required']
   },
@@ -14,4 +14,4 @@ const TicketItem = new Schema({
   }
 });
 
-module.exports = TicketItem;
+module.exports = TicketItemSchema;
