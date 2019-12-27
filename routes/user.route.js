@@ -54,7 +54,6 @@ routes.post('/:id/tickets', function(req, res) {
   const userId = req.params.id;
   const concertId = req.body.concert;
   const ticket = req.body;
-  const items = [];
 
   User.findById(userId)
     .then(user => {
@@ -63,8 +62,9 @@ routes.post('/:id/tickets', function(req, res) {
       for (let i = 0; i < ticket.items.length; i++) {
         ticketAmount += ticket.items[0].amount;
       }
+      console.log(ticketAmount);
 
-      user.tickets.create(ticket);
+      user.tickets.push(ticket);
       console.log(user.tickets);
       const saveUserTickets = user.save();
 
