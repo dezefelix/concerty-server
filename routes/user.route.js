@@ -57,25 +57,25 @@ routes.post('/:id/tickets', function(req, res) {
   const items = [];
 
   User.findById(userId)
-    .then((user) => {
+    .then(user => {
       let ticketAmount = 0;
 
-      for (const item of ticket.items) {
-        items.push(item);
-        ticketAmount += item.amount;
+      for (let i = 0; i < ticket.items.length; i++) {
+        ticketAmount += items[0].amount;
       }
-      ticket.items = items;
-      user.tickets.push(ticket);
+
+      user.tickets.create(ticket);
+      console.log(user.tickets);
       const saveUserTickets = user.save();
 
       let subtractConcertTicketsPromise;
       Concert.findById(concertId)
         .then(concert => {
 
-            console.log(concert);
+          console.log(concert);
 
-            concert.ticketsRemaining = concert.ticketsRemaining - ticketAmount;
-            subtractConcertTicketsPromise = concert.save();
+          concert.ticketsRemaining = concert.ticketsRemaining - ticketAmount;
+          subtractConcertTicketsPromise = concert.save();
 
           Promise.all([saveUserTickets, subtractConcertTicketsPromise])
             .then(result => {
