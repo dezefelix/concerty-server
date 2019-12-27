@@ -60,6 +60,7 @@ routes.post('/:id/tickets', function(req, res) {
       let ticketAmount = 0;
 
       for (let i = 0; i < ticket.items.length; i++) {
+        console.log(ticket.items[i]);
         ticketAmount += ticket.items[i].amount;
       }
       console.log(ticketAmount);
