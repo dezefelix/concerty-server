@@ -5,6 +5,8 @@ const authorizer = require('../helpers/authorizer');
 const hasher = require('../helpers/hasher');
 const User = require('../models/user.model');
 const Concert = require('../models/concert.model');
+const Ticket = require('../models/ticket.model');
+const TicketItem = require('../models/ticket-item.model');
 
 routes.get('/', function (req, res) {
   User.find({})
@@ -49,33 +51,33 @@ routes.post('/', function (req, res) {
 });
 
 routes.post('/:id/tickets', function(req, res) {
-  const id = req.params.id;
-  const ticket = req.body;
+  const userId = req.params.id;
+  const concertId = req.body.concert;
+  const ticket = new Ticket(req.body);
+  const items = [];
 
-  User.findById(id)
+  User.findById(userId)
     .then((user) => {
-
-      console.log(user);
-
-      user.tickets.push(ticket);
-      const saveUserTickets = user.save();
-      const concertId = req.body.concert;
       let ticketAmount = 0;
 
       for (const item of ticket.items) {
+        items.push(new TicketItem(item));
         ticketAmount += item.amount;
       }
+      ticket.items = items;
+      user.tickets.push(ticket);
+      const saveUserTickets = user.save();
 
-      let subtractConcertTickets;
+      let subtractConcertTicketsPromise;
       Concert.findById(concertId)
         .then(concert => {
 
             console.log(concert);
 
             concert.ticketsRemaining = concert.ticketsRemaining - ticketAmount;
-            subtractConcertTickets = concert.save();
+            subtractConcertTicketsPromise = concert.save();
 
-          Promise.all([saveUserTickets, subtractConcertTickets])
+          Promise.all([saveUserTickets, subtractConcertTicketsPromise])
             .then(result => {
               console.log(result);
               res.status(200).send(result);
