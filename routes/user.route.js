@@ -54,6 +54,9 @@ routes.post('/:id/tickets', function(req, res) {
 
   User.findById(id)
     .then((user) => {
+
+      console.log(user);
+
       user.tickets.push(ticket);
       const saveUserTickets = user.save();
       const concertId = req.body.concert;
@@ -66,6 +69,9 @@ routes.post('/:id/tickets', function(req, res) {
       let subtractConcertTickets;
       Concert.findById(concertId)
         .then(concert => {
+
+            console.log(concert);
+
             concert.ticketsRemaining = concert.ticketsRemaining - ticketAmount;
             subtractConcertTickets = concert.save();
 
