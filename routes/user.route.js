@@ -53,7 +53,7 @@ routes.post('/', function (req, res) {
 routes.post('/:id/tickets', function(req, res) {
   const userId = req.params.id;
   const concertId = req.body.concert;
-  const ticket = new Ticket(req.body);
+  const ticket = req.body;
   const items = [];
 
   User.findById(userId)
@@ -61,7 +61,7 @@ routes.post('/:id/tickets', function(req, res) {
       let ticketAmount = 0;
 
       for (const item of ticket.items) {
-        items.push(new TicketItem(item));
+        items.push(item);
         ticketAmount += item.amount;
       }
       ticket.items = items;
