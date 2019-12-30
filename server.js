@@ -27,7 +27,7 @@ app.use(ExpressJwt({
     // new RegExp(/.*/, 'i'), // For development purposes only.
 
     {url: '/api/auth/login', methods: ['POST', 'OPTIONS']},
-    {url: '/api/users', methods: ['POST', 'OPTIONS']}, // GET used to be here
+    {url: '/api/users', methods: ['GET', 'POST', 'OPTIONS']}, // Only /users:id GET should be public.
     {url: '/api/artists', methods: ['GET', 'OPTIONS']},
     {url: '/api/concerts', methods: ['GET', 'OPTIONS']},
   ]
