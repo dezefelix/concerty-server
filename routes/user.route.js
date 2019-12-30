@@ -5,8 +5,6 @@ const authorizer = require('../helpers/authorizer');
 const hasher = require('../helpers/hasher');
 const User = require('../models/user.model');
 const Concert = require('../models/concert.model');
-const Ticket = require('../models/ticket.model');
-const TicketItem = require('../models/ticket-item.model');
 
 routes.get('/', function (req, res) {
   User.find({})
@@ -27,7 +25,7 @@ routes.get('/:id', function (req, res) {
       res.status(200).json(user);
     })
     .catch(_ => {
-      res.status(403).json({error: "Not authorized"})
+      res.status(403).json({error: "Could not find user"})
     });
 });
 
@@ -72,10 +70,8 @@ routes.post('/:id/tickets', function(req, res) {
       let subtractConcertTicketsPromise;
       Concert.findById(concertId)
         .then(concert => {
-
-          console.log(concert);
-
-          concert.ticketsRemaining = concert.ticketsRemaining - ticketAmount;
+          const ticketsRemaining = concert.ticketsRemaining;
+          concert.ticketsRemaining = ticketsRemaining - ticketAmount;
           subtractConcertTicketsPromise = concert.save();
 
           Promise.all([saveUserTickets, subtractConcertTicketsPromise])
@@ -85,7 +81,7 @@ routes.post('/:id/tickets', function(req, res) {
             })
             .catch(err => {
               console.log(err);
-              res.status(409).send(err.message);
+              res.status(409).send('There are only ' + concert.ticketsRemaining + ' tickets available');
             });
         })
         .catch(err => console.log(err));
